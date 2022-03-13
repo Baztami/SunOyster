@@ -22,41 +22,167 @@ function App() {
   const [charData,setCharData]=useState({
     datasets:[],
   });
+  const [charData1,setCharData1]=useState({
+    datasets:[],
+  });
+  const [charData2,setCharData2]=useState({
+    datasets:[],
+  });
+  const [charData3,setCharData3]=useState({
+    datasets:[],
+  });
+
   const [chartOptions,setChartOptions]=useState({});
- 
+ const [chartOptions1,setChartOptions1]=useState({});
+ const [chartOptions2,setChartOptions2]=useState({});
+ const [chartOptions3,setChartOptions3]=useState({});
   useEffect(()=>{
+     
   
-    setCharData({
-      labels :["consoPV","consoTH","generatedTH"],
-      datasets:[
-        {
-          label :  "fld,sdml,f",
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.5)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-        ],
-          data:[consoPV,consoTH,generatedPV]
-        }
-      ]
-    });
-    setChartOptions({
-      responsive : true,
-      plugins : {
-        legend : {
-          position : "bottom"
-        },
-        title : {
-          display : true,
-          text : "PV-AutoSuffisance"
-        }
+      setCharData({
+          labels :["consoPV","consoTH","generatedTH"],
+          datasets:[
+            {
+              label :  "fld,sdml,f",
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+              data:[,,]
+            }
+          ]
+        });
+        setChartOptions({
+          responsive : true,
+          plugins : {
+            legend : {
+              position : "bottom"
+            },
+            title : {
+              display : true,
+              text : "PV-AutoSuffisance",
+              color : "red",
+              align : "center",
+              font : 	{weight: 'bold', size : "20px"},
+              padding : 20
+            },
+            
+      
+          }
+        })
+        setCharData1({
+          labels :["PV Direct","PV charge","PV injection"],
+          datasets:[
+            {
+              label :  "fld,sdml,f",
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+              data:[,,]
+            }
+          ]
+        });
+    
+        setChartOptions1({
+          responsive : true,
+          plugins : {
+            legend : {
+              position : "bottom"
+            },
+            title : {
+              display : true,
+              text : "PV-Autoconsommation",
+              color : "red",
+              align : "center",
+              font : 	{weight: 'bold', size : "20px"},
+              padding : 20
+            }
+      
+          }
+        });
+        setCharData2({
+          labels :["PV Direct","PV charge","PV injection"],
+          datasets:[
+            {
+              label :  "fld,sdml,f",
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+              data:[,,]
+            }
+          ]
+        });
+    
+        setChartOptions2({
+          responsive : true,
+          plugins : {
+            legend : {
+              position : "bottom"
+            },
+            title : {
+              display : true,
+              text : "TH-Autosuffisance",
+              color : "red",
+              align : "center",
+              font : 	{weight: 'bold', size : "20px"},
+              padding : 20
+            }
+      
+          }
+        });
+        setCharData3({
+          labels :["PV Direct","PV charge","PV injection"],
+          datasets:[
+            {
+              label :  "fld,sdml,f",
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+              data:[,,]
+            }
+          ]
+        });
+    
+        setChartOptions3({
+          responsive : true,
+          plugins : {
+            legend : {
+              position : "bottom"
+            },
+            title : {
+              display : true,
+              text : "TH-Autoconsommation",
+              color : "red",
+              align : "center",
+              font : 	{weight: 'bold', size : "20px"},
+              padding : 20
+            }
+          }
+        })
+
+      },[]);
   
-      }
-    })
-  },[]);
+ 
+
    
    
    
@@ -68,20 +194,38 @@ const [generatedTH,setgeneratedTH]=useState('');
 //erreur
 const [consoPVErr,setconsoPVErr]=useState({});
 const [consoTHErr,setconsoTHErr]=useState({});
-var sty=document.getElementById('hiden');
+var sty1=document.getElementById('hiden1');
+var sty2=document.getElementById('hiden2');
+var sty3=document.getElementById('hiden3');
+var sty4=document.getElementById('hiden4');
  
 const onSubmit=(e)=>{
   e.preventDefault();
-  const dat=[consoPV,consoPVErr,generatedPV];
-   
-  //setCharData.datasets[0].data[0]=consoPV;
-  //setCharData.datasets[0].data[1]=consoTH;
-  //setCharData.datasets[0].data[2]=generatedPV;
-  
-  //console.log(useEffect.setCharData.datasets[0].data[0]);
-  
+  charData.datasets[0].data[0]=consoPV;
+  charData.datasets[0].data[1]=consoTH;
+  charData.datasets[0].data[2]=generatedPV;
+  //2
+  charData1.datasets[0].data[0]=consoPV;
+  charData1.datasets[0].data[1]=consoTH;
+  charData1.datasets[0].data[2]=generatedPV;
 
- 
+  //3
+  charData2.datasets[0].data[0]=consoPV;
+  charData2.datasets[0].data[1]=consoTH;
+  charData2.datasets[0].data[2]=generatedPV;
+  //4
+  charData3.datasets[0].data[0]=consoPV;
+  charData3.datasets[0].data[1]=consoTH;
+  charData3.datasets[0].data[2]=generatedPV;
+
+  sty1.style.display="block";
+  sty2.style.display="block";
+  sty3.style.display="block";
+  sty4.style.display="block";
+
+
+   
+
   const isValid=formValidation();
   
   
@@ -116,7 +260,7 @@ return isValid;
           
           <div>
 
-            <label className="text-sm font-bold text-gray-600 block" >Consomation éléctrique annulle</label>
+            <label className="text-sm font-bold text-gray-600 block" >Consommation éléctrique annulle</label>
             
             <input type="text" name="consoPV" className="w-full p-2 border border-gray-300 rounded mt-1"  value={consoPV} onChange={(e)=>setconsoPV(e.target.value)} ></input>
             {Object.keys(consoPVErr).map((key)=>{
@@ -124,7 +268,7 @@ return isValid;
               return <div style={ {color : "red"} }>  {consoPVErr[key]}  </div>
             })}
             
-            <label className="text-sm font-bold text-gray-600 block" >Consomation thérmique annulle</label>
+            <label className="text-sm font-bold text-gray-600 block" >Consommation thérmique annulle</label>
             <input type="text"  name="consoTH"className="w-full p-2 border border-gray-300 rounded mt-1"  value={consoTH} onChange={(e)=>setconsoTH(e.target
               .value)}></input>
             <label className="text-sm font-bold text-gray-600 block" >Generation PV</label>
@@ -147,12 +291,29 @@ return isValid;
         
             
           
-          <div className="display py-20  px-10" id="hiden1" style={ {  width:'35%' ,height:'30%'}}>
+          <div className="display py-20  px-10" id="hiden1" style={ { display : "none" , width:'35%' ,height:'30%'}}>
           
           <Doughnut options={chartOptions} data={charData}/>
            
           </div>
 
+
+
+          <div className="display py-20  px-10" id="hiden2" style={ {display : "none" ,  width:'35%' ,height:'30%'}}>
+          
+          <Doughnut options={chartOptions1} data={charData1}/>
+           
+          </div>
+          <div className="display py-20  px-10" id="hiden3" style={ { display : "none" , width:'35%' ,height:'30%'}}>
+          
+          <Doughnut options={chartOptions2} data={charData2}/>
+           
+          </div>
+          <div className="display py-20  px-10" id="hiden4" style={ {display : "none" ,  width:'35%' ,height:'30%'}}>
+          
+          <Doughnut options={chartOptions3} data={charData3}/>
+           
+          </div>
           </div>
 
           
