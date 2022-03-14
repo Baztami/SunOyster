@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import React,{ useState,useEffect } from 'react';
 import './App.css';
 import {Chart,Tooltip,Title,ArcElement,Legend} from 'chart.js';
@@ -97,7 +97,7 @@ function App() {
           }
         });
         setCharData2({
-          labels :["PV Direct","PV charge","PV injection"],
+          labels :["TH Direct","TH décharge","TH autre"],
           datasets:[
             {
               label :  "fld,sdml,f",
@@ -132,7 +132,7 @@ function App() {
           }
         });
         setCharData3({
-          labels :["PV Direct","PV charge","PV injection"],
+          labels :["TH charge","TH Direct","TH injection"],
           datasets:[
             {
               label :  "fld,sdml,f",
@@ -180,6 +180,7 @@ const [consoTH,setconsoTH]=useState('');
 const [generatedPV,setgeneratedPV]=useState('');
 const [generatedTH,setgeneratedTH]=useState('');
 const [pvstockage,setpvstockage]=useState('');
+const [thstockage,setthstockage]=useState('');
 
 //erreur
 const [consoPVErr,setconsoPVErr]=useState({});
@@ -192,7 +193,7 @@ var sty4=document.getElementById('hiden4');
  
 const onSubmit=(e)=>{
   e.preventDefault();
-
+//representation du PV-AutoSuffisance
 
 var GPV=generatedPV;
 var pv_direct=GPV*0.7;
@@ -220,22 +221,62 @@ var pr_reseau=parseInt((pv_reseau*100)/consoPV);
 
 
 
-  //2
+  //representation du PV-AutoConsommation
+
+  var pvc_direct=pv_direct;
+  var pvc_charge=pvstockage*0.3;
+  var pvc_injection=GPV-(pvc_direct+pvc_charge);
+
+  var pr_pvc_direct=(pvc_direct*100)/generatedPV;
+  var pr_pvc_charge=(pvc_charge*100)/generatedPV;
+  var pr_pvc_injected=(pvc_injection*100)/generatedPV;
 
 
 
-  charData1.datasets[0].data[0]=consoPV;
-  charData1.datasets[0].data[1]=consoTH;
-  charData1.datasets[0].data[2]=generatedPV;
 
-  //3
-  charData2.datasets[0].data[0]=consoPV;
-  charData2.datasets[0].data[1]=consoTH;
-  charData2.datasets[0].data[2]=generatedPV;
-  //4
-  charData3.datasets[0].data[0]=consoPV;
-  charData3.datasets[0].data[1]=consoTH;
-  charData3.datasets[0].data[2]=generatedPV;
+  charData1.datasets[0].data[0]=Math.round(pr_pvc_direct);
+  charData1.datasets[0].data[1]=Math.round(pr_pvc_charge);
+  charData1.datasets[0].data[2]=Math.round(pr_pvc_injected);
+
+  //representation du TH-Consommation
+
+  var GTH=generatedTH;
+  var th_direct=GTH*0.7;
+  var th_decharge=thstockage*0.25;
+  var th_others=consoTH-(th_decharge+th_direct);
+
+  var thc_charge=th_decharge;
+  var thc_injection=generatedTH-(thc_charge+th_direct);
+  //pourcentage
+ var prth_direct=Math.round((th_direct*100)/consoTH);
+ var prth_decharge=Math.round((th_decharge*100)/consoTH);
+var prth_others=Math.round((th_others*100)/consoTH);
+
+
+
+
+  
+  //autosuffisance _th
+
+  var thc_injection=generatedTH-(thc_charge+th_direct);
+  console.log(generatedTH);
+  console.log(thc_charge);
+  console.log(th_direct);
+  var pr_th_direct=Math.round((th_direct*100)/generatedTH);
+  var pr_thc_charge=Math.round((thc_charge*100)/generatedTH);
+  var pr_thc_injection=Math.round((thc_injection*100)/generatedTH);
+
+  charData3.datasets[0].data[0]=pr_thc_charge;
+  charData3.datasets[0].data[1]=pr_th_direct;
+  charData3.datasets[0].data[2]=pr_thc_injection;
+
+
+  charData2.datasets[0].data[0]=prth_direct;
+  charData2.datasets[0].data[1]=prth_decharge              ;
+  charData2.datasets[0].data[2]= prth_others      ;
+
+
+
 
   sty1.style.display="block";
   sty2.style.display="block";
@@ -309,7 +350,7 @@ var pr_reseau=parseInt((pv_reseau*100)/consoPV);
             <label className="text-sm font-bold text-gray-600 block" >Stockage PV</label> 
             <input type="text" name="stockagePV" className="w-full p-2 border border-gray-300 rounded mt-1"  value={pvstockage} onChange={(e)=>setpvstockage(e.target.value)}></input>
             <label className="text-sm font-bold text-gray-600 block" >Stockage TH</label>
-            <input type="text" name="stockageTH" className="w-full p-2 border border-gray-300 rounded mt-1"></input>
+            <input type="text" name="stockageTH" className="w-full p-2 border border-gray-300 rounded mt-1" value={thstockage} onChange={(e)=>setthstockage(e.target.value)}></input>
           </div>
           <button type="submit" id="baz" className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>Submit</button>
           
