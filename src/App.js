@@ -32,9 +32,9 @@ function App() {
             {
               label :  "fld,sdml,f",
               backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.5)',
+                'rgba(0,191,255)',
+                'rgba(255,105,180)',
+                'rgba(176,196,222)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)'
@@ -67,9 +67,9 @@ function App() {
             {
               label :  "fld,sdml,f",
               backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.5)',
+                'rgba(0,191,255)',
+                'rgba(255,105,180)',
+                'rgba(176,196,222)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)'
@@ -102,9 +102,9 @@ function App() {
             {
               label :  "fld,sdml,f",
               backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.5)',
+                'rgba(0,191,255)',
+                'rgba(255,105,180)',
+                'rgba(176,196,222)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)'
@@ -137,9 +137,9 @@ function App() {
             {
               label :  "fld,sdml,f",
               backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.5)',
+                'rgba(0,191,255)',
+                'rgba(255,105,180)',
+                'rgba(176,196,222)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)'
@@ -185,6 +185,8 @@ const [thstockage,setthstockage]=useState('');
 //erreur
 const [consoPVErr,setconsoPVErr]=useState({});
 const [consoTHErr,setconsoTHErr]=useState({});
+const [generatedPVErr,setgeneratedPVErr]=useState({});
+const [generatedTHErr,setgeneratedTHErr]=useState({});
 
 var sty1=document.getElementById('hiden1');
 var sty2=document.getElementById('hiden2');
@@ -303,18 +305,65 @@ var prth_others=Math.round((th_others*100)/consoTH);
   const generatedPVErr={};
   let isValid=true;
   let isValid1=true;
-  const regex="[+-]?([0-9]*[.])?[0-9]+";
+  let isValid2=true;
 
-  //if (consoTH.trim().length===0 ) { consoTHErr.isEmpty="veuiller remplir correctement la case de consommation thermique"; isValid=false;  
-  //setconsoTHErr(consoTHErr);
+  let isValid3=true;
+  let isValid4=true;
+  let isValid5=true;
+  const regex=new RegExp("[+-]?([0-9]*[.])?[0-9]+");
+
+   
+  if (consoPV.trim().length===0 || !consoPV.match(regex))
+   { consoPVErr.isEmpty="veuiller remplir correctement la case de consommation thermique"; isValid=false;  
+  setconsoPVErr(consoPVErr);
   
-  //return isValid;}
-  //else(consoPV.trim().length===0 )
-  // { consoTHErr.isEmpty="veuiller remplir correctement la case de consommation thermique"; isValid=false;  
-  //setconsoTHErr(consoTHErr);
+  sty1.style.display="none";
+  sty2.style.display="none";
+  sty3.style.display="none";
+  sty4.style.display="none";
+
+
   
-  //return isValid;}
+  return isValid;}
+  if (consoTH.trim().length===0 || !consoTH.match(regex))
+   { consoTHErr.isEmpty="veuiller remplir correctement la case de consommation thermique"; isValid1=false;  
+  setconsoTHErr(consoTHErr);
+  
+  sty1.style.display="none";
+  sty2.style.display="none";
+  sty3.style.display="none";
+  sty4.style.display="none";
+
+
+  
+  return isValid1;}
+  if (generatedPV.trim().length===0 || !generatedPV.match(regex))
+  { generatedPVErr.isEmpty="veuiller remplir correctement la case de consommation thermique"; isValid2=false;  
+ setgeneratedPVErr(generatedPVErr);
  
+ sty1.style.display="none";
+ sty2.style.display="none";
+ sty3.style.display="none";
+ sty4.style.display="none";
+
+
+ 
+ return isValid2;}
+
+ if (generatedTH.trim().length===0 || !generatedTH.match(regex))
+  { generatedTHErr.isEmpty="veuiller remplir correctement la case de consommation thermique"; isValid3=false;  
+ setgeneratedTHErr(generatedTHErr);
+ 
+ sty1.style.display="none";
+ sty2.style.display="none";
+ sty3.style.display="none";
+ sty4.style.display="none";
+
+
+ 
+ return isValid3;}
+
+
  
 
 
@@ -330,7 +379,7 @@ var prth_others=Math.round((th_others*100)/consoTH);
           
           <div>
 
-            <label className="text-sm font-bold text-gray-600 block" >Consommation éléctrique annulle</label>
+            <label className="text-sm font-bold text-gray-600 block" >Consommation éléctrique annuelle</label>
             
             <input type="text" name="consoPV" className="w-full p-2 border border-gray-300 rounded mt-1"  value={consoPV} onChange={(e)=>setconsoPV(e.target.value)} ></input>
             {Object.keys(consoPVErr).map((key)=>{
@@ -338,15 +387,27 @@ var prth_others=Math.round((th_others*100)/consoTH);
               return <div style={ {color : "red",fontFamily: "bold"} }>  {consoPVErr[key]}  </div>
             })}
             
-            <label className="text-sm font-bold text-gray-600 block" >Consommation thérmique annulle</label>
+            <label className="text-sm font-bold text-gray-600 block" >Consommation thérmique annuelle</label>
             <input type="text"  name="consoTH"className="w-full p-2 border border-gray-300 rounded mt-1"  value={consoTH} onChange={(e)=>setconsoTH(e.target
               .value)}></input>
+               {Object.keys(consoTHErr).map((key)=>{
+
+              return <div style={ {color : "red",fontFamily: "bold"} }>  {consoTHErr[key]}  </div>
+            })}
                 
             <label className="text-sm font-bold text-gray-600 block" >Generation PV</label>
             <input type="text" name="generatedPV" className="w-full p-2 border border-gray-300 rounded mt-1"  value={generatedPV} onChange={(e)=>setgeneratedPV(e.target.value)}></input>
-           
+            {Object.keys(generatedPVErr).map((key)=>{
+
+            return <div style={ {color : "red",fontFamily: "bold"} }>  {generatedPVErr[key]}  </div>
+              })}
             <label className="text-sm font-bold text-gray-600 block" >Generation TH</label>
             <input type="text" name="generatedTH" className="w-full p-2 border border-gray-300 rounded mt-1"  value={generatedTH} onChange={(e)=>setgeneratedTH(e.target.value)}></input>
+            {Object.keys(generatedTHErr).map((key)=>{
+
+            return <div style={ {color : "red",fontFamily: "bold"} }>  {generatedTHErr[key]}  </div>
+            })}
+            
             <label className="text-sm font-bold text-gray-600 block" >Stockage PV</label> 
             <input type="text" name="stockagePV" className="w-full p-2 border border-gray-300 rounded mt-1"  value={pvstockage} onChange={(e)=>setpvstockage(e.target.value)}></input>
             <label className="text-sm font-bold text-gray-600 block" >Stockage TH</label>
