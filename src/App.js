@@ -195,31 +195,31 @@ var sty4=document.getElementById('hiden4');
  const clear=()=>{
 
 
-
-  charData2.datasets[0].data[0]=null;
-  charData2.datasets[0].data[1]=null             ;
-  charData2.datasets[0].data[2]= null      ;
-
-
-  charData.datasets[0].data[0]=null;
-  charData.datasets[0].data[1]=null;
-  charData.datasets[0].data[2]=null;
-
-  charData1.datasets[0].data[0]=null;
-  charData1.datasets[0].data[1]=null;
-  charData1.datasets[0].data[2]=null;
-
-  charData3.datasets[0].data[0]=null;
-  charData3.datasets[0].data[1]=null;
-  charData3.datasets[0].data[2]=null;
+window.location.reload();
+  // charData2.datasets[0].data[0]=null;
+  // charData2.datasets[0].data[1]=null             ;
+  // charData2.datasets[0].data[2]= null      ;
 
 
+  // charData.datasets[0].data[0]=null;
+  // charData.datasets[0].data[1]=null;
+  // charData.datasets[0].data[2]=null;
+
+  // charData1.datasets[0].data[0]=null;
+  // charData1.datasets[0].data[1]=null;
+  // charData1.datasets[0].data[2]=null;
+
+  // charData3.datasets[0].data[0]=null;
+  // charData3.datasets[0].data[1]=null;
+  // charData3.datasets[0].data[2]=null;
 
 
-  sty1.style.display="none";
-  sty2.style.display="none";
-  sty3.style.display="none";
-  sty4.style.display="none";
+
+
+  // sty1.style.display="none";
+  // sty2.style.display="none";
+  // sty3.style.display="none";
+  // sty4.style.display="none";
  }
 const onSubmit=(e)=>{
   e.preventDefault();
