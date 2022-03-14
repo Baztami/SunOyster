@@ -4,20 +4,7 @@ import './App.css';
 import {Chart,Tooltip,Title,ArcElement,Legend} from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
-Chart.register( 
-  Tooltip,Title,ArcElement,Legend);
-
-
-
- 
-   
- 
-
- 
- 
-
- 
-
+Chart.register(Tooltip,Title,ArcElement,Legend);
 function App() {
   const [charData,setCharData]=useState({
     datasets:[],
@@ -40,7 +27,7 @@ function App() {
      
   
       setCharData({
-          labels :["consoPV","consoTH","generatedTH"],
+          labels :["PV Direct","PV decharge","PV réseau"],
           datasets:[
             {
               label :  "fld,sdml,f",
@@ -189,11 +176,15 @@ function App() {
  
 const [consoPV,setconsoPV]=useState('');
 const [consoTH,setconsoTH]=useState('');
+
 const [generatedPV,setgeneratedPV]=useState('');
 const [generatedTH,setgeneratedTH]=useState('');
+const [pvstockage,setpvstockage]=useState('');
+
 //erreur
 const [consoPVErr,setconsoPVErr]=useState({});
 const [consoTHErr,setconsoTHErr]=useState({});
+
 var sty1=document.getElementById('hiden1');
 var sty2=document.getElementById('hiden2');
 var sty3=document.getElementById('hiden3');
@@ -201,10 +192,38 @@ var sty4=document.getElementById('hiden4');
  
 const onSubmit=(e)=>{
   e.preventDefault();
-  charData.datasets[0].data[0]=consoPV;
-  charData.datasets[0].data[1]=consoTH;
-  charData.datasets[0].data[2]=generatedPV;
+
+
+var GPV=generatedPV;
+var pv_direct=GPV*0.7;
+var stockagepv=pvstockage;
+var pv_decharge=pvstockage*0.1;
+var pv_reseau=consoPV-(pv_direct+pv_decharge);
+var pr_pvd=parseInt((pv_direct*100)/consoPV);
+var pr_decharge=parseInt((pv_decharge*100)/consoPV);
+var pr_reseau=parseInt((pv_reseau*100)/consoPV);
+
+
+
+
+  charData.datasets[0].data[0]=pr_pvd;
+  charData.datasets[0].data[1]=pr_decharge;
+  charData.datasets[0].data[2]=pr_reseau;
+
+
+
+
+
+
+
+
+
+
+
   //2
+
+
+
   charData1.datasets[0].data[0]=consoPV;
   charData1.datasets[0].data[1]=consoTH;
   charData1.datasets[0].data[2]=generatedPV;
@@ -240,12 +259,22 @@ const onSubmit=(e)=>{
 
   const consoPVErr={};
   const consoTHErr={};
-let isValid=true;
-if(consoPV.trim().length===0){consoPVErr.isEmpty="veuiller remplir la case de consomation electrique"; isValid=false;}
+  const generatedPVErr={};
+  let isValid=true;
+  let isValid1=true;
+  const regex="[+-]?([0-9]*[.])?[0-9]+";
 
-
-setconsoPVErr(consoPVErr);
-return isValid;
+  //if (consoTH.trim().length===0 ) { consoTHErr.isEmpty="veuiller remplir correctement la case de consommation thermique"; isValid=false;  
+  //setconsoTHErr(consoTHErr);
+  
+  //return isValid;}
+  //else(consoPV.trim().length===0 )
+  // { consoTHErr.isEmpty="veuiller remplir correctement la case de consommation thermique"; isValid=false;  
+  //setconsoTHErr(consoTHErr);
+  
+  //return isValid;}
+ 
+ 
 
 
                       }
@@ -265,25 +294,27 @@ return isValid;
             <input type="text" name="consoPV" className="w-full p-2 border border-gray-300 rounded mt-1"  value={consoPV} onChange={(e)=>setconsoPV(e.target.value)} ></input>
             {Object.keys(consoPVErr).map((key)=>{
 
-              return <div style={ {color : "red"} }>  {consoPVErr[key]}  </div>
+              return <div style={ {color : "red",fontFamily: "bold"} }>  {consoPVErr[key]}  </div>
             })}
             
             <label className="text-sm font-bold text-gray-600 block" >Consommation thérmique annulle</label>
             <input type="text"  name="consoTH"className="w-full p-2 border border-gray-300 rounded mt-1"  value={consoTH} onChange={(e)=>setconsoTH(e.target
               .value)}></input>
+                
             <label className="text-sm font-bold text-gray-600 block" >Generation PV</label>
             <input type="text" name="generatedPV" className="w-full p-2 border border-gray-300 rounded mt-1"  value={generatedPV} onChange={(e)=>setgeneratedPV(e.target.value)}></input>
+           
             <label className="text-sm font-bold text-gray-600 block" >Generation TH</label>
             <input type="text" name="generatedTH" className="w-full p-2 border border-gray-300 rounded mt-1"  value={generatedTH} onChange={(e)=>setgeneratedTH(e.target.value)}></input>
             <label className="text-sm font-bold text-gray-600 block" >Stockage PV</label> 
-            <input type="text" name="stockagePV" className="w-full p-2 border border-gray-300 rounded mt-1"></input>
+            <input type="text" name="stockagePV" className="w-full p-2 border border-gray-300 rounded mt-1"  value={pvstockage} onChange={(e)=>setpvstockage(e.target.value)}></input>
             <label className="text-sm font-bold text-gray-600 block" >Stockage TH</label>
             <input type="text" name="stockageTH" className="w-full p-2 border border-gray-300 rounded mt-1"></input>
           </div>
           <button type="submit" id="baz" className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>Submit</button>
           
           </form>
-        
+          
         </div>
         
 
