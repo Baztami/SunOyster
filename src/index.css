@@ -21,6 +21,10 @@ body {
  
  
 }
+button{
+
+  margin: 50px 50px;
+}
 #baz{
 
    text-align: center;

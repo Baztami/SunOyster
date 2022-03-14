@@ -192,7 +192,35 @@ var sty1=document.getElementById('hiden1');
 var sty2=document.getElementById('hiden2');
 var sty3=document.getElementById('hiden3');
 var sty4=document.getElementById('hiden4');
- 
+ const clear=()=>{
+
+
+
+  charData2.datasets[0].data[0]=null;
+  charData2.datasets[0].data[1]=null             ;
+  charData2.datasets[0].data[2]= null      ;
+
+
+  charData.datasets[0].data[0]=null;
+  charData.datasets[0].data[1]=null;
+  charData.datasets[0].data[2]=null;
+
+  charData1.datasets[0].data[0]=null;
+  charData1.datasets[0].data[1]=null;
+  charData1.datasets[0].data[2]=null;
+
+  charData3.datasets[0].data[0]=null;
+  charData3.datasets[0].data[1]=null;
+  charData3.datasets[0].data[2]=null;
+
+
+
+
+  sty1.style.display="none";
+  sty2.style.display="none";
+  sty3.style.display="none";
+  sty4.style.display="none";
+ }
 const onSubmit=(e)=>{
   e.preventDefault();
 //representation du PV-AutoSuffisance
@@ -261,9 +289,7 @@ var prth_others=Math.round((th_others*100)/consoTH);
   //autosuffisance _th
 
   var thc_injection=generatedTH-(thc_charge+th_direct);
-  console.log(generatedTH);
-  console.log(thc_charge);
-  console.log(th_direct);
+  
   var pr_th_direct=Math.round((th_direct*100)/generatedTH);
   var pr_thc_charge=Math.round((thc_charge*100)/generatedTH);
   var pr_thc_injection=Math.round((thc_injection*100)/generatedTH);
@@ -414,8 +440,9 @@ var prth_others=Math.round((th_others*100)/consoTH);
             <input type="text" name="stockageTH" className="w-full p-2 border border-gray-300 rounded mt-1" value={thstockage} onChange={(e)=>setthstockage(e.target.value)}></input>
           </div>
           <button type="submit" id="baz" className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>Submit</button>
-          
+          <button  onClick={clear} id="baz" className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>Clear</button>
           </form>
+          
           
         </div>
         
